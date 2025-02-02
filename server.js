@@ -237,6 +237,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+const studentRoutes = require('./routes/studentRoutes');
+
 
 dotenv.config();
 
@@ -264,6 +266,8 @@ app.use(cookieParser());
 
 // Routes
 app.use('/api/users', userRoutes);
+
+app.use('/api', studentRoutes); // Prefix all routes with /api
 app.use(notFound);
 app.use(errorHandler); // Place error handler middleware after routes
 
