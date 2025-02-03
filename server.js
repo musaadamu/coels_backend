@@ -237,7 +237,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
-const studentRoutes = require('./routes/studentRoutes');
+import studentRoutes from './routes/studentRoutes.js';
 
 
 dotenv.config();
