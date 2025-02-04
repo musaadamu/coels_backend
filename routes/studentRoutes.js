@@ -1,45 +1,25 @@
-// // routes/studentRoutes.js
-// const express = require('express');
-// const router = express.Router();
-// const studentController = require('../controllers/studentController');
-
-// // Routes
-// router.post('/students', studentController.createStudent);
-// router.get('/students', studentController.getStudents);
-// router.put('/students/:id', studentController.updateStudent);
-// router.delete('/students/:id', studentController.deleteStudent);
-
-// module.exports = router;
-
-
 import express from 'express';
-import { 
-    createStudent, 
-    getStudents, 
-    updateStudent, 
-    deleteStudent,
-    deleteDocument,
-    upload 
-} from '../controllers/studentController.js';
+import multer from 'multer';
+import { createStudent, getStudents, updateStudent, deleteStudent } from '../controllers/studentController.js';
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Directory to save files
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname); // Unique filename
+  },
+});
+
+const upload = multer({ storage });
 
 const router = express.Router();
 
-// Create a new student with document upload support
-router.post('/students', upload.array('documents', 5), createStudent);
-
-// Get all students
+// Routes
+router.post('/students', upload.array('documents', 5), createStudent); // Allow up to 5 documents
 router.get('/students', getStudents);
-
-// Get a single student by ID
-router.get('/students/:id', getStudents);
-
-// Update a student with document upload support
-router.put('/students/:id', upload.array('documents', 5), updateStudent);
-
-// Delete a student
+router.put('/students/:id', updateStudent);
 router.delete('/students/:id', deleteStudent);
-
-// Delete a specific document from a student
-router.delete('/students/:studentId/documents/:documentId', deleteDocument);
 
 export default router;
