@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const accommodationSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   phoneNumber: { type: String, required: true },
   course: { type: String, required: true },
   yearOfStudy: { type: String, required: true },
